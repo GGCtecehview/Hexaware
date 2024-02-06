@@ -1,0 +1,43 @@
+CREATE TABLE payments (
+    payment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    payment_date DATE NOT NULL,
+    payment_amount DECIMAL(10, 2) NOT NULL,
+    client_id BIGINT,
+    FOREIGN KEY (client_id) REFERENCES clients(client_id)
+);
+
+CREATE TABLE claims (
+    claim_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    claim_number VARCHAR(255) NOT NULL,
+    date_filed DATE NOT NULL,
+    claim_amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    policy_id BIGINT,
+    client_id BIGINT,
+    FOREIGN KEY (policy_id) REFERENCES policies(policy_id), -- Foreign key to the Policy table
+    FOREIGN KEY (client_id) REFERENCES clients(client_id)
+);
+
+CREATE TABLE clients (
+    client_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    client_name VARCHAR(255) NOT NULL,
+    contact_info VARCHAR(255),
+    policy_id BIGINT,
+    FOREIGN KEY (policy_id) REFERENCES policies(policy_id) -- Foreign key to the Policy table
+);
+
+
+CREATE TABLE policies (
+    policy_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    policy_name VARCHAR(255) NOT NULL,
+    policy_details TEXT
+);
+
+
+CREATE TABLE users (
+    user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
+
